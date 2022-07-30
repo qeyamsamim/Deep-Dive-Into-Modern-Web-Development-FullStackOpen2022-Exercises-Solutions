@@ -1,0 +1,13 @@
+.text-color {
+    background-color: lightgrey;
+    font-size: 20;
+    color: green;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10;
+}
+
+.text-color-red {
+    color: red;
+}
