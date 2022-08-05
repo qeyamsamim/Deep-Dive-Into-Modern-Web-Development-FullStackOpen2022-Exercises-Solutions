@@ -47,6 +47,7 @@ const App = () => {
           .catch(message => {
             setMessage(`Information of ${personInList.name} has already been removed from server.`);
             setMessageType("error");
+            setPersons(persons.filter(p => p.id !== personInList.id))
           })
       }
     } else {
@@ -56,6 +57,10 @@ const App = () => {
             setPersons(persons.concat(intialPersons));
             setMessage(`${intialPersons.name} was successfully added.`);
             setMessageType("success");
+          })
+          .catch(error => {
+            setMessage(error.response.data.error);
+            setMessageType("error");
           })
     }
     setTimeout(() => {
