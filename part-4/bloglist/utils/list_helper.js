@@ -1,4 +1,4 @@
-const emptyList = []
+const _ = require('lodash')
 
 const listWithOneBlog = [
   {
@@ -23,7 +23,7 @@ const blogList = [
   {
     _id: '5a422aa71b54a676234s17f8',
     title: 'Go To Statement Considered Harmful',
-    author: 'Edsger W. Dijkstra',
+    author: 'Qeyam',
     url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
     likes: 6,
     __v: 0
@@ -39,7 +39,7 @@ const blogList = [
   {
     _id: 'aslkdf12l99;l;alsadjf',
     title: 'Title Two',
-    author: 'Edsger W. Dijkstra',
+    author: 'Samim',
     url: 'again some url here',
     likes: 18,
     __v: 0
@@ -54,26 +54,51 @@ const totalLikes = blogsList => {
 
   if (blogsList.length === 0) {
     return 0
-  } else if (blogsList.length === 1) {
-    return blogsList[0].likes
-  } else {
-    return likes = blogsList.reduce((sum, current) => sum + current.likes, 0)
-  }
+  } 
+  return likes = blogsList.reduce((sum, current) => sum + current.likes, 0)
 }
 
 const favoriteBlog = blogsList => {
-  return blogsList.reduce((prev, current) => (prev.likes > current.likes) ? prev : current);
+  return blogsList.reduce((prev, current) => (prev.likes > current.likes) ? prev : current)
 }
 
 const mostBlogs = blogs => {
+  if ( blogs.length === 0) {
+    return undefined
+  }
 
+  const byAuthor = _.groupBy(blogs, (b) => b.author)
+  const likeCounts = Object.keys(byAuthor).map(title => {
+    return {
+      title,
+      blogs: byAuthor[title].length
+    }
+  })
+
+  return likeCounts.sort((a, b) => b.blogs - a.blogs )[0].title
+}
+
+const mostLikes = blogs => {
+  if (blogs.length === 0) {
+    return undefined
+  }
+
+  const byAuthor = _.groupBy(blogs, (b) => b.author)
+  const likeCounts = Object.keys(byAuthor).map(title => {
+    return {
+      title,
+      likes: byAuthor[title].reduce((s, b) => s + b.likes, 0)
+    }
+  })
+  return likeCounts.sort((a, b) => b.likes - a.likes )[0].title
 }
 
 module.exports = {
-  emptyList,
   listWithOneBlog,
   blogList,
   dummy,
   totalLikes,
-  favoriteBlog
+  favoriteBlog,
+  mostBlogs,
+  mostLikes
 }

@@ -40,6 +40,32 @@ describe('when there is one user in db', () => {
         expect(usernames).toContain(newUser.username)
     }, 100000)
 
+    test('fails if username is too short', async () => {
+        const newUser = {
+          username: 'mo',
+          passwordHash: 'sekred'
+        }
+      
+        await api
+          .post('/api/users')
+          .send(newUser)
+          .expect(400)
+          .expect('Content-Type', /application\/json/)
+      })
+    
+      test('fails if password is too short', async () => {
+        const newUser = {
+          username: 'kalle',
+          passwordHash: 'p'
+        }
+      
+        await api
+          .post('/api/users')
+          .send(newUser)
+          .expect(400)
+          .expect('Content-Type', /application\/json/)
+      })
+
     test('creation fails with proper statuscode and message if username already taken', async () => {
         const usersBefore = await helper.usersInDb()
         

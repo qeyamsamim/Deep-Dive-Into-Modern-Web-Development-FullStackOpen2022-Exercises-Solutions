@@ -10,7 +10,7 @@ test('dummy returns one', () => {
 describe('total likes', () => {
 
   test('of empty list is zero', () => {
-    const result = listHelper.totalLikes(listHelper.emptyList)
+    const result = listHelper.totalLikes([])
     expect(result).toBe(0)
   })
 
@@ -34,7 +34,7 @@ describe('favorite blog', () => {
       {
         _id: 'aslkdf12l99;l;alsadjf',
         title: 'Title Two',
-        author: 'Edsger W. Dijkstra',
+        author: 'Samim',
         url: 'again some url here',
         likes: 18,
         __v: 0
@@ -43,6 +43,42 @@ describe('favorite blog', () => {
   })
 })
 
-describe('Authors with most blogs and likes', () => {
+describe('Amost blogs', () => {
   
+  const listWithOneBlog = listHelper.blogList.slice(0, 1)
+
+  test('when list is empty, it is undefined', () => {
+    const result = listHelper.mostBlogs([])
+    expect(result).toBe(undefined)
+  })
+
+  test('when there is one blog, it is the author', () => {
+    const result = listHelper.mostBlogs(listWithOneBlog)
+    expect(result).toEqual(listHelper.blogList[0].author)
+  })
+
+  test('Authors with large amounts of blogs', () => {
+    const result = listHelper.mostBlogs(listHelper.blogList)
+    expect(result).toEqual('Edsger W. Dijkstra')
+  })  
+})
+
+describe('most likes', () => {
+
+  const listWithOneBlog = listHelper.blogList.slice(0, 1)
+
+  test('when list is empty, it is undefined', () => {
+    const result = listHelper.mostLikes([])
+    expect(result).toBe(undefined)
+  })
+
+  test('when list has only one blog, it is the author of that', () => {
+    const result = listHelper.mostLikes(listWithOneBlog)
+    expect(result).toEqual(listHelper.blogList[0].author)
+  })
+
+  test('Authors with large amounts of likes', () => {
+      const result = listHelper.mostLikes(listHelper.blogList)
+      expect(result).toEqual('Samim')
+    })
 })
